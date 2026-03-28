@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atusha Day – 2 Years 💕</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+/* BABY PINK BACKGROUND */
+body{
+background:#ffd6e7;
+overflow:hidden;
+color:#0b1d3a;
+}
+
+.screen{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hidden{display:none;}
+
+/* NAVY BLUE + WHITE THEME */
+h1{
+font-family:'Pacifico',cursive;
+color:#0b1d3a;
+font-size:32px;
+margin-bottom:15px;
+}
+
+p{
+max-width:330px;
+line-height:1.7;
+font-size:15px;
+color:#0b1d3a;
+}
+
+button{
+margin-top:20px;
+padding:12px 24px;
+border:none;
+border-radius:30px;
+background:#0b1d3a;
+color:white;
+font-size:15px;
+cursor:pointer;
+box-shadow:0 0 15px rgba(11,29,58,0.4);
+}
+
+/* gift boxes */
+.gifts{
+display:flex;
+gap:20px;
+margin-top:30px;
+}
+
+.gift{
+font-size:65px;
+cursor:pointer;
+animation:pulse 1.3s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);} }
+
+/* photo */
+img{
+width:230px;
+border-radius:20px;
+margin-top:15px;
+box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+/* CARTOON + LETTER CLICK GAME */
+
+#clickGame h2{
+margin-top:15px;
+color:#0b1d3a;
+}
+
+.letterBox{
+margin-top:20px;
+padding:18px;
+background:white;
+border-radius:18px;
+max-width:320px;
+box-shadow:0 0 12px rgba(0,0,0,0.15);
+animation:fadeIn 1s ease;
+}
+
+.cartoon{
+font-size:70px;
+margin-top:15px;
+animation:bounce 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes bounce{
+0%{transform:scale(0.7)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+/* floating hearts */
+.heart{
+position:absolute;
+color:#0b1d3a;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:0}
+100%{transform:translateY(-10vh);opacity:1}
+}
+
+</style>
+</head>
+<body>
+
+<!-- FIRST MESSAGE -->
+<div class="screen" id="start">
+<h1>For You Atul 💙</h1>
+<p>I made something cute for you. Tap the button to open it 💕</p>
+<button onclick="show('gifts')">Tap to Open 🎁</button>
+</div>
+
+<!-- GIFT BOX SCREEN -->
+<div class="screen hidden" id="gifts">
+<h1>Choose a Gift 🎁</h1>
+<div class="gifts">
+<div class="gift" onclick="gift1()">🎁</div>
+<div class="gift" onclick="gift2()">🎁</div>
+<div class="gift" onclick="gift3()">🎁</div>
+</div>
+</div>
+
+<!-- GIFT 1 -->
+<div class="screen hidden" id="gift1">
+<h1>Happiee Atusha Day 💙</h1>
+<p>happiee atusha day my cute lil cup cake 💖</p>
+<button onclick="backGifts()">Back</button>
+</div>
+
+<!-- GIFT 2 -->
+<div class="screen hidden" id="gift2">
+<h1>For My Love 💙</h1>
+<p>
+2 years completed with you is the most beautiful thing in my life.<br><br>
+Every memory with you feels so special and I really feel lucky to have you.<br><br>
+You are the reason I smile more and feel happy every day.<br><br>
+I never want to lose you because you mean everything to me.
+</p>
+<button onclick="backGifts()">Back</button>
+</div>
+
+<!-- GIFT 3 -->
+<div class="screen hidden" id="gift3">
+<h1>Big Letter For You 💙</h1>
+<p>
+You are not just my love, you are my happiness, my comfort and my favourite person.<br><br>
+These 2 years with you are the most beautiful journey of my life and I really want many more years with you.<br><br>
+I love you more than words can explain and I always will.
+</p>
+<button onclick="showPhoto()">Tap to see our pic 📸</button>
+</div>
+
+<!-- PHOTO SCREEN -->
+<div class="screen hidden" id="photo">
+<h1>Our Cute Memory 💕</h1>
+<img src="photo.jpg">
+
+<p class="note">
+These memories mean everything to me.<br>
+Every moment with you feels special.<br>
+I love you more every day.<br>
+You are my happiness.<br>
+I never want to lose you.<br>
+Thank you for these 2 years.<br>
+Forever with you ❤️
+</p>
+
+<button onclick="clickGame()">Last Surprise 💙</button>
+</div>
+
+<!-- NEW STEP 5: ONE CLICK = ONE FULL SCREEN MESSAGE + CARTOON -->
+<div class="screen hidden" id="clickGame">
+<h1>Tap the Heart 💙</h1>
+<div class="gift" onclick="tapHeart()">💙</div>
+<h2 id="clickCount">0 / 10</h2>
+</div>
+
+<!-- MESSAGE SCREEN -->
+<div class="screen hidden" id="messageScreen">
+<div class="cartoon" id="cartoonShow">🐻</div>
+
+<div class="letterBox" id="messageText"></div>
+
+<button onclick="backToHeart()">Back 💙</button>
+</div>
+
+<script>
+
+/* SCREEN SWITCH FUNCTION */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+/* START BUTTON */
+function openGifts(){
+  show('gifts');
+}
+
+/* GIFT BUTTONS */
+function gift1(){ show('gift1'); }
+function gift2(){ show('gift2'); }
+function gift3(){ show('gift3'); }
+function backGifts(){ show('gifts'); }
+function showPhoto(){ show('photo'); }
+function clickGame(){ show('clickGame'); }
+
+/* HEART CLICK GAME */
+let c=0;
+
+const letters=[
+"You make my life better 💙",
+"I feel lucky to have you 💕",
+"You are my favourite person ❤️",
+"These 2 years are my happiest memories ✨",
+"You make me smile every day 😊",
+"I love talking to you so much 💌",
+"You are my comfort person 💙",
+"I never want to lose you 💕",
+"Forever with you ❤️",
+"Happy Atusha Day my cute lil cupcake 💖"
+];
+
+const cartoons=["🐻","🐰","🐶","🐱","🐼","🦊","🐨","🐥","🧸","💙"];
+
+function tapHeart(){
+  if(c>=10) return;
+
+  c++;
+  document.getElementById('clickCount').innerText=c + " / 10";
+
+  show('messageScreen');
+  document.getElementById('cartoonShow').innerText = cartoons[c-1];
+  document.getElementById('messageText').innerText = letters[c-1];
+
+  if(c===10){
+    setTimeout(showFinalScreen,2000);
+  }
+}
+
+function backToHeart(){
+  show('clickGame');
+}
+
+/* FINAL SCREEN */
+function showFinalScreen(){
+  show('finalScreen');
+}
+
+/* FLOATING HEARTS ANIMATION */
+setInterval(function(){
+  let h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='💙';
+  h.style.left=Math.random()*100+'vw';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},600);
+
+</script>
+
+<!-- FINAL SCREEN -->
+<div class="screen hidden" id="finalScreen">
+<h1>Forever Us 💙</h1>
+<p style="font-size:18px;margin-top:15px">
+From Pihu to Atul 💙<br><br>
+Forever Together<br>
+Forever Memories<br>
+Forever Love 💕
+</p>
+
+<div style="font-size:70px;margin-top:20px">💙💍💙</div>
+</div>
+
+<script>
+
+/* SCREEN SWITCH FUNCTION */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+/* START BUTTON */
+function openGifts(){
+  show('gifts');
+}
+
+/* GIFT BUTTONS */
+function gift1(){ show('gift1'); }
+function gift2(){ show('gift2'); }
+function gift3(){ show('gift3'); }
+function backGifts(){ show('gifts'); }
+function showPhoto(){ show('photo'); }
+function clickGame(){ show('clickGame'); }
+
+/* HEART CLICK GAME */
+let c=0;
+
+const letters=[
+"You make my life better 💙",
+"I feel lucky to have you 💕",
+"You are my favourite person ❤️",
+"These 2 years are my happiest memories ✨",
+"You make me smile every day 😊",
+"I love talking to you so much 💌",
+"You are my comfort person 💙",
+"I never want to lose you 💕",
+"Forever with you ❤️",
+"Happy Atusha Day my cute lil cupcake 💖"
+];
+
+const cartoons=["🐻","🐰","🐶","🐱","🐼","🦊","🐨","🐥","🧸","💙"];
+
+function tapHeart(){
+  if(c>=10) return;
+
+  c++;
+  document.getElementById('clickCount').innerText=c + " / 10";
+
+  show('messageScreen');
+  document.getElementById('cartoonShow').innerText = cartoons[c-1];
+  document.getElementById('messageText').innerText = letters[c-1];
+
+  if(c===10){
+    setTimeout(showFinalScreen,2000);
+  }
+}
+
+function backToHeart(){
+  show('clickGame');
+}
+
+/* FINAL SCREEN */
+function showFinalScreen(){
+  show('finalScreen');
+}
+
+/* FLOATING HEARTS ANIMATION */
+setInterval(function(){
+  let h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='💙';
+  h.style.left=Math.random()*100+'vw';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},600);
+
+</script>
+
+</body>
+</html>
